@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quantigration Dashboard</title>
+    <style>
+        table { border-collapse: collapse; margin-bottom: 40px; }
+        th, td { border: 1px solid #999; padding: 8px; }
+        th { background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+
+<!-- CLIENTS -->
+<form method="get" action="#clients">
+  <input type="hidden" name="orders_limit" value="{{ request.args.get('orders_limit', 0) }}">
+  <input type="hidden" name="rma_limit" value="{{ request.args.get('rma_limit', 0) }}">
+  
+  <label for="clients_limit">Clients to display:</label>
+  <input type="number" name="clients_limit" id="clients_limit" min="0" value="{{ request.args.get('clients_limit', 0) }}">
+  <input type="submit" value="Update Clients">
+</form>
+
+    <h1 id=" clients">Clients</h1>
+    <table>
+        <tr>
+            <th>ClientID</th><th>FirstName</th><th>LastName</th><th>Street</th><th>City</th>
+            <th>State</th><th>ZipCode</th><th>Telephone</th>
+        </tr>
+        {% for row in clients %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- ORDERS -->
+<form method="get" action="#orders">
+  <input type="hidden" name="clients_limit" value="{{ request.args.get('clients_limit', 0) }}">
+  <input type="hidden" name="rma_limit" value="{{ request.args.get('rma_limit', 0) }}">
+  
+  <label for="orders_limit">Orders to display:</label>
+  <input type="number" name="orders_limit" id="orders_limit" min="0" value="{{ request.args.get('orders_limit', 0) }}">
+  <input type="submit" value="Update Orders">
+</form>
+
+    <h1 id="orders">Orders</h1>
+    <table>
+        <tr><th>OrderID</th><th>ClientID</th><th>SKU</th><th>Description</th></tr>
+        {% for row in orders %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- RMA -->
+<form method="get" action="#rma">
+  <input type="hidden" name="clients_limit" value="{{ request.args.get('clients_limit', 0) }}">
+  <input type="hidden" name="orders_limit" value="{{ request.args.get('orders_limit', 0) }}">
+  
+  <label for="rma_limit">RMA to display:</label>
+  <input type="number" name="rma_limit" id="rma_limit" min="0" value="{{ request.args.get('rma_limit', 0) }}">
+  <input type="submit" value="Update RMA">
+</form>
+
+    <h1 id="rma">RMA</h1>
+    <table>
+        <tr><th>RMAID</th><th>OrderID</th><th>Step</th><th>Status</th><th>Reason</th></tr>
+        {% for row in rma %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
